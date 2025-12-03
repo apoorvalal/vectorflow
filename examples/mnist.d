@@ -7,6 +7,8 @@
 
 import std.stdio;
 import std.algorithm;
+import core.time;
+import std.datetime;
 
 import vectorflow;
 import vectorflow.math : fabs, round;
@@ -18,13 +20,12 @@ struct Obs {
     float[] features;
 }
 
-auto load_data()
-{
+auto load_data() {
     import std.file;
     import std.typecons;
     if(!exists(data_dir))
     {
-        auto root_url = "http://yann.lecun.com/exdb/mnist/"; 
+        auto root_url = "https://storage.googleapis.com/cvdf-datasets/mnist/";
         mkdir(data_dir);
         import std.net.curl;
         import std.process;
@@ -51,8 +52,7 @@ auto load_data()
     return tuple(load_data(data_dir ~ "train"), load_data(data_dir ~ "test"));
 }
 
-Obs[] load_data(string prefix)
-{
+Obs[] load_data(string prefix) {
     import std.conv;
     import std.bitmanip;
     import std.exception;
@@ -101,7 +101,7 @@ Obs[] load_data(string prefix)
 
 void main(string[] args)
 {
-    writeln("Hello world!");
+    writeln("Hello world - MNIST in D (vectorflow) !");
 
     auto nn = NeuralNet()
         .stack(DenseData(28 * 28)) // MNIST is of dimension 28 * 28 = 784
@@ -115,6 +115,8 @@ void main(string[] args)
     auto train = data[0];
     auto test = data[1];
 
+    auto start = MonoTime.currTime;
+
     nn.learn(train, "multinomial",
             new ADAM(
                 15, // number of passes
@@ -124,6 +126,10 @@ void main(string[] args)
             true, // verbose
             4 // number of cores
     );
+
+    auto end = MonoTime.currTime;
+    auto duration = end - start;
+    writeln("Training time: ", duration.total!"msecs" / 1000.0, " seconds");
 
     // if you want to save the model locally, do this:
     // nn.serialize("dump_model.vf");

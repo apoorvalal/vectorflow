@@ -1,31 +1,27 @@
 {
-    "name": "vectorflow",
-    "description": "Minimalist neural network library for sparse data",
-    "copyright": "Copyright: 2017 Netflix, Inc.",
-    "license": "Apache-2.0",
-    "authors": ["Netflix"],
-    "configurations": [
-      {
-        "name": "lib",
-        "targetName": "vectorflow",
-        "targetType": "library",
-        "excludedSourceFiles": [
-          "test/*.d",
-          "examples/*.d"
-        ]
-      },
-      {
-        "name": "unittest",
-        "targetType": "library",
-        "sourcePaths": [
-          "test"
-        ],
-        "importPaths": [
-          "test"
-        ],
-        "excludedSourceFiles": [
-          "examples/*.d"
-        ]
-      }
-    ]
+  "name": "vectorflow",
+  "description": "Minimalist neural network library for sparse data",
+  "copyright": "Copyright: 2017 Netflix, Inc.",
+  "license": "Apache-2.0",
+  "authors": ["Netflix"],
+
+  "configurations": [
+    {
+      "name": "lib",
+      "targetName": "vectorflow",
+      "targetType": "library",
+      "excludedSourceFiles": [
+        "test/*.d",
+        "examples/*.d",
+        "src/vectorflow/c_api.d"
+      ]
+    },
+    {
+      "name": "shared-lib",
+      "targetName": "vectorflow",
+      "targetType": "dynamicLibrary",
+      "sourceFiles": ["src/vectorflow/c_api.d"],
+      "excludedSourceFiles": ["test/*.d", "examples/*.d"]
+    }
+  ]
 }

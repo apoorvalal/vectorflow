@@ -1,0 +1,46 @@
+# D build artifacts
+.dub
+dub.selections.json
+docs.json
+__dummy.html
+*.o
+*.obj
+*.lst
+
+# Compiled binaries
+examples/mnist
+examples/rcv1
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+
+# Data directories and files
+examples/mnist_data/
+examples/rcv1_data/
+*.gz
+*.idx
+*.ubyte
+
+# Model files
+*.vf
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Python bindings (if built in-tree)
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+dist/
+build/
+
+# pyvectorflow build artifacts
+pyvectorflow/build/
+pyvectorflow/examples/mnist_data/
